@@ -10,6 +10,7 @@ import Taller6.modelo.ingrediente;
 import Taller6.modelo.productoMenu;
 import Taller6.modelo.*;
 
+
 public class Restaurante {
 	
 	static ArrayList<ingrediente> Ingredientes = new ArrayList<>();
@@ -34,13 +35,23 @@ public class Restaurante {
 	
 	public static void cargarInformacionRestaurante(File archivoIngredientes, File archivoMenu, File archivoCombos) throws FileNotFoundException, IOException
 	{
+		try {
+			
 		cargarIngredientes(archivoIngredientes);
 		cargarMenu(archivoMenu);
 		cargarCombos(archivoCombos);
+		}
+		catch(IngredienteRepetidoException e){ 
+			System.out.println(e.Nuevomensaje());
+			
+		}catch (ProductoRepetidoException e){
+			System.out.println(e.Nuevomensaje());
+			
+		}
 		
 	}
 
-	private static void cargarIngredientes(File archivoIngredientes) throws IOException
+	private static void cargarIngredientes(File archivoIngredientes) throws IOException, IngredienteRepetidoException
 	{
 		try {
 		BufferedReader br = new BufferedReader(new FileReader(archivoIngredientes));
@@ -53,18 +64,23 @@ public class Restaurante {
 			int costoAdicional = Integer.parseInt(partes[1]);
 			ingrediente ing = new ingrediente(nombre, costoAdicional);
 			Ingredientes.add(ing);
-			
+			if(verificaring(nombre, Ingredientes)== true) {
+				
+				throw new IngredienteRepetidoException(nombre);
+				
+			}
+			else {
 			linea = br.readLine();
 		}
 		br.close();
-		}
+		}}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 	}
 	
-	private static void cargarMenu(File archivoMenu)
+	private static void cargarMenu(File archivoMenu) throws IOException, ProductoRepetidoException
 	{
 		
 		try {
@@ -79,10 +95,18 @@ public class Restaurante {
 			productoMenu pr = new productoMenu(nombre, precioBase);
 			Productos.add(pr);
 			
+			if(verificarprod(nombre, Productos)== true) {
+				
+				throw new ProductoRepetidoException(nombre);
+				
+			}
+			else {
 			linea = br.readLine();
 		}
+			
+			
 		br.close();
-		}
+		}}
 		catch (IOException e){
 			e.printStackTrace();
 		}
@@ -159,6 +183,38 @@ public class Restaurante {
 				return ("No existe ningún pedido con el id " + id);
 			}
 		}
+	
+	public static boolean verificaring(String nombre, ArrayList<ingrediente> ingrediente) {
+		
+		boolean ing = false;
+		for (ingrediente i: ingrediente) {
+			if(i.getNombre().equals(nombre)) {
+				ing = true;
+				break;
+			}
+		}
+		
+			return ing;
+			
+		
+		
+	}
+	
+	public static boolean verificarprod(String nombre, ArrayList<productoMenu> productoMenu) {
+		
+		boolean pr = false;
+		for (productoMenu p: productoMenu) {
+			if(p.getNombre().equals(nombre)) {
+				pr = true;
+				break;
+			}
+		}
+		
+			return pr;
+			
+		
+		
+	}
 	
 	public static void iniciarPedido(String nombreCliente, String direccionCliente) throws IOException{
 		Pedido pedido = new Pedido(nombreCliente, direccionCliente);

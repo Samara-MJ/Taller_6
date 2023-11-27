@@ -29,7 +29,12 @@ public class Aplicacion {
 		archivoIngredientes.createNewFile();
 		File archivoCombos = new File("data/combos.txt");
 		archivoCombos.createNewFile();
-		Restaurante.cargarInformacionRestaurante(archivoIngredientes, archivoMenu, archivoCombos);
+		try {
+			Restaurante.cargarInformacionRestaurante(archivoIngredientes, archivoMenu, archivoCombos);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("===== Bienvenido a Hamburguesas El Corral =====");
 		System.out.println("\n----- ¿Qué desea hacer? -----");
 		
