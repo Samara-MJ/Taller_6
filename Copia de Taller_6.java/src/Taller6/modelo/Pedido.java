@@ -23,9 +23,12 @@ public class Pedido{
 		return idPedido;
 	}
 
-	public void agregarProducto(Producto item) {
+	public void agregarProducto(Producto item) throws ProductoExcedido {
 		this.productos.add(item);
 		this.precioNeto += item.getPrecio();
+		if (this.precioNeto >= 150.000) {
+			throw new ProductoExcedido(this.precioNeto);
+		}
 	}
 	
 	private int getPrecioNetoPedido() {

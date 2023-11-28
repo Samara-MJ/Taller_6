@@ -10,7 +10,8 @@ public class IngredienteRepetidoException extends HamburguesaException{
 		// TODO Auto-generated constructor stub
 	}
 	public String Nuevomensaje() {
-		return "EL INGREDIENTE" + getProducto() + "ESTA REPETIDO POR FAVOR VERIFIQUE EL ARCHIVO DE DATOS  Y EJECUTE EL PROGRAMA DE NUEVO";
+		return " ---------------------------------------------------------------------------------------------------------------------------------------------------------------------\n"
+				+ "EL INGREDIENTE " + getProducto().toUpperCase() + " ESTA REPETIDO POR FAVOR VERIFIQUE EL ARCHIVO DE DATOS ANTES DE CORRER EL PROGRAMA \n---------------------------------------------------------------------------------------------------------------------------------------------------------------------\n ";
 		}
 	
 }

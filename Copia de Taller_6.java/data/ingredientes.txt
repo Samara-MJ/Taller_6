@@ -13,4 +13,3 @@ frijol refrito;4500
 queso fundido;4500
 tocineta picada;6000
 piña;2500
-lechuga;5000

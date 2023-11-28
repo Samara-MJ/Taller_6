@@ -4,10 +4,6 @@ import java.io.*;
 
 import java.util.*;
 
-import Taller6.modelo.Combo;
-import Taller6.modelo.Pedido;
-import Taller6.modelo.ingrediente;
-import Taller6.modelo.productoMenu;
 import Taller6.modelo.*;
 
 public class Restaurante {
@@ -190,7 +186,8 @@ public class Restaurante {
 
 	}
 
-	public static void iniciarPedido(String nombreCliente, String direccionCliente) throws IOException {
+	public static void iniciarPedido(String nombreCliente, String direccionCliente) throws IOException, ProductoExcedido {
+	try {
 		Pedido pedido = new Pedido(nombreCliente, direccionCliente);
 		boolean continuarPedido = true;
 		while (continuarPedido) {
@@ -353,8 +350,9 @@ public class Restaurante {
 							}
 						}
 						if (r3 == 1) {
+							
 							ajuste.agregarIngrediente(extra);
-						} else if (r3 == 2) {
+							} else if (r3 == 2) {
 							ajuste.eliminarIngrediente(extra);
 						}
 						System.out.println("¿Desea seguir modificando el producto? (Si/No)");
@@ -379,6 +377,8 @@ public class Restaurante {
 				}
 			}
 		}
-	}
-
-}
+	
+	}catch(ProductoExcedido e) {
+		System.out.println(e.Nuevomensaje());
+		}
+}}
